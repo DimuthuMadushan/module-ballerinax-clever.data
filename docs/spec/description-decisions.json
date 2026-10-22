@@ -1,0 +1,319 @@
+{
+ "sharedProperties": {
+  "rel": "Relation of the linked page to the current response, one of `next`, `prev` or `self`",
+  "uri": "Relative URI of the linked resource or page, including the API version prefix"
+ },
+ "parameters": {
+  "getCourses.query.limit": "Maximum number of records to return in one page",
+  "getCourses.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getCourses.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getCourse.path.id": "ID of the course",
+  "getDistrictForCourse.path.id": "ID of the course",
+  "getResourcesForCourse.path.id": "ID of the course",
+  "getResourcesForCourse.query.limit": "Maximum number of records to return in one page",
+  "getResourcesForCourse.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getResourcesForCourse.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSchoolsForCourse.path.id": "ID of the course",
+  "getSchoolsForCourse.query.limit": "Maximum number of records to return in one page",
+  "getSchoolsForCourse.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSchoolsForCourse.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSectionsForCourse.path.id": "ID of the course",
+  "getSectionsForCourse.query.limit": "Maximum number of records to return in one page",
+  "getSectionsForCourse.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSectionsForCourse.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getDistrict.path.id": "ID of the district",
+  "getResources.query.limit": "Maximum number of records to return in one page",
+  "getResources.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getResources.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getResource.path.id": "ID of the resource",
+  "getCoursesForResource.path.id": "ID of the resource",
+  "getCoursesForResource.query.limit": "Maximum number of records to return in one page",
+  "getCoursesForResource.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getCoursesForResource.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSectionsForResource.path.id": "ID of the resource",
+  "getSectionsForResource.query.limit": "Maximum number of records to return in one page",
+  "getSectionsForResource.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSectionsForResource.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getUsersForResource.path.id": "ID of the resource",
+  "getUsersForResource.query.role": "Restrict the results to users with this role, such as student or teacher",
+  "getUsersForResource.query.limit": "Maximum number of records to return in one page",
+  "getUsersForResource.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getUsersForResource.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSchools.query.limit": "Maximum number of records to return in one page",
+  "getSchools.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSchools.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSchool.path.id": "ID of the school",
+  "getCoursesForSchool.path.id": "ID of the school",
+  "getCoursesForSchool.query.limit": "Maximum number of records to return in one page",
+  "getCoursesForSchool.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getCoursesForSchool.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getDistrictForSchool.path.id": "ID of the school",
+  "getSectionsForSchool.path.id": "ID of the school",
+  "getSectionsForSchool.query.limit": "Maximum number of records to return in one page",
+  "getSectionsForSchool.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSectionsForSchool.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getTermsForSchool.path.id": "ID of the school",
+  "getTermsForSchool.query.limit": "Maximum number of records to return in one page",
+  "getTermsForSchool.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getTermsForSchool.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getUsersForSchool.path.id": "ID of the school",
+  "getUsersForSchool.query.role": "Restrict the results to users with this role, such as student or teacher",
+  "getUsersForSchool.query.primary": "Set to `true` to return only users whose relationship to the entity is marked as primary",
+  "getUsersForSchool.query.limit": "Maximum number of records to return in one page",
+  "getUsersForSchool.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getUsersForSchool.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSections.query.limit": "Maximum number of records to return in one page",
+  "getSections.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSections.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSection.path.id": "ID of the section",
+  "getCourseForSection.path.id": "ID of the section",
+  "getDistrictForSection.path.id": "ID of the section",
+  "getResourcesForSection.path.id": "ID of the section",
+  "getResourcesForSection.query.limit": "Maximum number of records to return in one page",
+  "getResourcesForSection.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getResourcesForSection.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSchoolForSection.path.id": "ID of the section",
+  "getTermForSection.path.id": "ID of the section",
+  "getUsersForSection.path.id": "ID of the section",
+  "getUsersForSection.query.role": "Restrict the results to users with this role, such as student or teacher",
+  "getUsersForSection.query.limit": "Maximum number of records to return in one page",
+  "getUsersForSection.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getUsersForSection.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getTerms.query.limit": "Maximum number of records to return in one page",
+  "getTerms.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getTerms.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getTerm.path.id": "ID of the term",
+  "getDistrictForTerm.path.id": "ID of the term",
+  "getSectionsForTerm.path.id": "ID of the term",
+  "getSectionsForTerm.query.limit": "Maximum number of records to return in one page",
+  "getSectionsForTerm.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSectionsForTerm.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSchoolsForTerm.path.id": "ID of the term",
+  "getSchoolsForTerm.query.limit": "Maximum number of records to return in one page",
+  "getSchoolsForTerm.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSchoolsForTerm.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getUsers.query.limit": "Maximum number of records to return in one page",
+  "getUsers.query.role": "Restrict the results to users with this role, such as student or teacher",
+  "getUsers.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getUsers.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getUser.path.id": "ID of the user",
+  "getDistrictForUser.path.id": "ID of the user",
+  "getContactsForUser.path.id": "ID of the user",
+  "getContactsForUser.query.limit": "Maximum number of records to return in one page",
+  "getContactsForUser.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getContactsForUser.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getStudentsForUser.path.id": "ID of the user",
+  "getStudentsForUser.query.limit": "Maximum number of records to return in one page",
+  "getStudentsForUser.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getStudentsForUser.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getTeachersForUser.path.id": "ID of the user",
+  "getTeachersForUser.query.limit": "Maximum number of records to return in one page",
+  "getTeachersForUser.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getTeachersForUser.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getResourcesForUser.path.id": "ID of the user",
+  "getResourcesForUser.query.limit": "Maximum number of records to return in one page",
+  "getResourcesForUser.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getResourcesForUser.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSchoolsForUser.path.id": "ID of the user",
+  "getSchoolsForUser.query.primary": "Set to `true` to return only users whose relationship to the entity is marked as primary",
+  "getSchoolsForUser.query.limit": "Maximum number of records to return in one page",
+  "getSchoolsForUser.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSchoolsForUser.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getSectionsForUser.path.id": "ID of the user",
+  "getSectionsForUser.query.limit": "Maximum number of records to return in one page",
+  "getSectionsForUser.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getSectionsForUser.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "createAssignmentForSection.path.section_id": "ID of the section",
+  "getAssignmentForSection.path.section_id": "ID of the section",
+  "getAssignmentForSection.path.assignment_id": "ID of the assignment in the section",
+  "updateAssignmentForSection.path.section_id": "ID of the section",
+  "updateAssignmentForSection.path.assignment_id": "ID of the assignment in the section",
+  "deleteAssignmentForSection.path.section_id": "ID of the section",
+  "deleteAssignmentForSection.path.assignment_id": "ID of the assignment in the section",
+  "getSubmissionsForAssignment.path.section_id": "ID of the section",
+  "getSubmissionsForAssignment.path.assignment_id": "ID of the assignment in the section",
+  "getSubmissionsForAssignment.query.cursor": "Opaque pagination cursor taken from the `next` link of the previous page of submissions",
+  "getSubmissionsForAssignment.query.limit": "Maximum number of records to return in one page",
+  "getSubmissionForAssignment.path.section_id": "ID of the section",
+  "getSubmissionForAssignment.path.assignment_id": "ID of the assignment in the section",
+  "getSubmissionForAssignment.path.user_id": "ID of the user who owns the submission",
+  "updateSubmissionForAssignment.path.section_id": "ID of the section",
+  "updateSubmissionForAssignment.path.assignment_id": "ID of the assignment in the section",
+  "updateSubmissionForAssignment.path.user_id": "ID of the user who owns the submission",
+  "listAttendanceForSchool.path.school_id": "ID of the school",
+  "listAttendanceForSchool.query.date_range_start": "First attendance date to include, in YYYY-MM-DD format",
+  "listAttendanceForSchool.query.date_range_end": "Last attendance date to include, in YYYY-MM-DD format",
+  "listAttendanceForSchool.query.attendance_status": "Restrict the results to attendance records with this status",
+  "listAttendanceForSchool.query.limit": "Maximum number of records to return in one page",
+  "listAttendanceForSchool.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "listAttendanceForSchool.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "listAttendanceForSection.path.section_id": "ID of the section",
+  "listAttendanceForSection.query.date_range_start": "First attendance date to include, in YYYY-MM-DD format",
+  "listAttendanceForSection.query.date_range_end": "Last attendance date to include, in YYYY-MM-DD format",
+  "listAttendanceForSection.query.attendance_status": "Restrict the results to attendance records with this status",
+  "listAttendanceForSection.query.limit": "Maximum number of records to return in one page",
+  "listAttendanceForSection.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "listAttendanceForSection.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getEvents.query.limit": "Maximum number of records to return in one page",
+  "getEvents.query.starting_after": "Cursor for forward pagination: the ID of the last record of the previous page, so the page returned starts after it",
+  "getEvents.query.ending_before": "Cursor for backward pagination: the ID of the first record of the next page, so the page returned ends before it",
+  "getEvents.query.school": "ID of a school; only events for this school are returned",
+  "getEvents.query.record_type": "Restrict the events to these record types, such as `users.updated` or `sections.created`; may be repeated",
+  "getEvent.path.id": "ID of the event"
+ },
+ "operations": {
+  "getCourses": {
+   "summary": "List courses"
+  },
+  "getCourse": {
+   "summary": "Get a course"
+  },
+  "getDistrictForCourse": {
+   "summary": "Get the district of a course"
+  },
+  "getResourcesForCourse": {
+   "summary": "List the resources of a course"
+  },
+  "getSchoolsForCourse": {
+   "summary": "List the schools of a course"
+  },
+  "getSectionsForCourse": {
+   "summary": "List the sections of a course"
+  },
+  "getDistricts": {
+   "summary": "List districts"
+  },
+  "getDistrict": {
+   "summary": "Get a district"
+  },
+  "getResources": {
+   "summary": "List resources"
+  },
+  "getResource": {
+   "summary": "Get a resource"
+  },
+  "getCoursesForResource": {
+   "summary": "List the courses of a resource"
+  },
+  "getSectionsForResource": {
+   "summary": "List the sections of a resource"
+  },
+  "getUsersForResource": {
+   "summary": "List the users of a resource"
+  },
+  "getSchools": {
+   "summary": "List schools"
+  },
+  "getSchool": {
+   "summary": "Get a school"
+  },
+  "getCoursesForSchool": {
+   "summary": "List the courses of a school"
+  },
+  "getDistrictForSchool": {
+   "summary": "Get the district of a school"
+  },
+  "getSectionsForSchool": {
+   "summary": "List the sections of a school"
+  },
+  "getTermsForSchool": {
+   "summary": "List the terms of a school"
+  },
+  "getUsersForSchool": {
+   "summary": "List the users of a school"
+  },
+  "getSections": {
+   "summary": "List sections"
+  },
+  "getSection": {
+   "summary": "Get a section"
+  },
+  "getCourseForSection": {
+   "summary": "Get the course of a section"
+  },
+  "getDistrictForSection": {
+   "summary": "Get the district of a section"
+  },
+  "getResourcesForSection": {
+   "summary": "List the resources of a section"
+  },
+  "getSchoolForSection": {
+   "summary": "Get the school of a section"
+  },
+  "getTermForSection": {
+   "summary": "Get the term of a section"
+  },
+  "getUsersForSection": {
+   "summary": "List the users of a section"
+  },
+  "getTerms": {
+   "summary": "List terms"
+  },
+  "getTerm": {
+   "summary": "Get a term"
+  },
+  "getDistrictForTerm": {
+   "summary": "Get the district of a term"
+  },
+  "getSectionsForTerm": {
+   "summary": "List the sections of a term"
+  },
+  "getSchoolsForTerm": {
+   "summary": "List the schools of a term"
+  },
+  "getUsers": {
+   "summary": "List users"
+  },
+  "getUser": {
+   "summary": "Get a user"
+  },
+  "getDistrictForUser": {
+   "summary": "Get the district of a user"
+  },
+  "getContactsForUser": {
+   "summary": "List the contacts of a user"
+  },
+  "getStudentsForUser": {
+   "summary": "List the students of a user"
+  },
+  "getTeachersForUser": {
+   "summary": "List the teachers of a user"
+  },
+  "getResourcesForUser": {
+   "summary": "List the resources of a user"
+  },
+  "getSchoolsForUser": {
+   "summary": "List the schools of a user"
+  },
+  "getSectionsForUser": {
+   "summary": "List the sections of a user"
+  },
+  "createAssignmentForSection": {
+   "summary": "Create an assignment in a section"
+  },
+  "getAssignmentForSection": {
+   "summary": "Get an assignment of a section"
+  },
+  "deleteAssignmentForSection": {
+   "summary": "Delete an assignment of a section"
+  },
+  "updateAssignmentForSection": {
+   "summary": "Update an assignment of a section"
+  },
+  "getSubmissionsForAssignment": {
+   "summary": "List submissions for an assignment"
+  },
+  "getSubmissionForAssignment": {
+   "summary": "Get the submission of a user for an assignment"
+  },
+  "updateSubmissionForAssignment": {
+   "summary": "Update the submission of a user for an assignment"
+  },
+  "getEvents": {
+   "summary": "List data change events"
+  },
+  "getEvent": {
+   "summary": "Get a data change event"
+  }
+ }
+}

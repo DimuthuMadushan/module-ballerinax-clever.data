@@ -1,0 +1,4092 @@
+openapi: 3.0.1
+info:
+  title: Data API
+  description: "Provides access to the Clever Data API, letting applications read\
+    \ and manage education roster data such as districts, schools, courses, sections,\
+    \ students and teachers, as well as assignments and submissions."
+  version: 3.1.0
+servers:
+- url: https://api.clever.com/v3.1
+security:
+- bearerAuth: []
+paths:
+  /courses:
+    get:
+      tags:
+      - Courses
+      summary: List courses
+      description: Returns a list of courses
+      operationId: getCourses
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      - name: count
+        in: query
+        description: |
+          If "true", returns a CountResponse ({count, links})
+          instead of the normal list response.
+        schema:
+          type: string
+          enum:
+          - ""
+          - "true"
+          - "false"
+          - undefined
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoursesResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /courses/{id}:
+    get:
+      tags:
+      - Courses
+      summary: Get a course
+      description: Returns a specific course
+      operationId: getCourse
+      parameters:
+      - name: id
+        in: path
+        description: ID of the course
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /courses/{id}/district:
+    get:
+      tags:
+      - Courses
+      summary: Get the district of a course
+      description: Returns the district for a course
+      operationId: getDistrictForCourse
+      parameters:
+      - name: id
+        in: path
+        description: ID of the course
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistrictResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /courses/{id}/resources:
+    get:
+      tags:
+      - Courses
+      summary: List the resources of a course
+      description: Returns the resources for a course
+      operationId: getResourcesForCourse
+      parameters:
+      - name: id
+        in: path
+        description: ID of the course
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourcesResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /courses/{id}/schools:
+    get:
+      tags:
+      - Courses
+      summary: List the schools of a course
+      description: Returns the schools for a course
+      operationId: getSchoolsForCourse
+      parameters:
+      - name: id
+        in: path
+        description: ID of the course
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchoolsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /courses/{id}/sections:
+    get:
+      tags:
+      - Courses
+      summary: List the sections of a course
+      description: Returns the sections for a course
+      operationId: getSectionsForCourse
+      parameters:
+      - name: id
+        in: path
+        description: ID of the course
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /districts:
+    get:
+      tags:
+      - Districts
+      summary: List districts
+      description: Returns a list of districts. In practice this will only return
+        the one district associated with the bearer token
+      operationId: getDistricts
+      parameters:
+      - name: count
+        in: query
+        description: |
+          If "true", returns a CountResponse ({count, links})
+          instead of the normal list response.
+        schema:
+          type: string
+          enum:
+          - ""
+          - "true"
+          - "false"
+          - undefined
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistrictsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /districts/{id}:
+    get:
+      tags:
+      - Districts
+      summary: Get a district
+      description: Returns a specific district
+      operationId: getDistrict
+      parameters:
+      - name: id
+        in: path
+        description: ID of the district
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistrictResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /resources:
+    get:
+      tags:
+      - Resources
+      summary: List resources
+      description: Returns a list of resources
+      operationId: getResources
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourcesResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /resources/{id}:
+    get:
+      tags:
+      - Resources
+      summary: Get a resource
+      description: Returns a specific resource
+      operationId: getResource
+      parameters:
+      - name: id
+        in: path
+        description: ID of the resource
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /resources/{id}/courses:
+    get:
+      tags:
+      - Resources
+      summary: List the courses of a resource
+      description: Returns the courses for a resource
+      operationId: getCoursesForResource
+      parameters:
+      - name: id
+        in: path
+        description: ID of the resource
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoursesResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /resources/{id}/sections:
+    get:
+      tags:
+      - Resources
+      summary: List the sections of a resource
+      description: Returns the sections for a resource
+      operationId: getSectionsForResource
+      parameters:
+      - name: id
+        in: path
+        description: ID of the resource
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /resources/{id}/users:
+    get:
+      tags:
+      - Resources
+      summary: List the users of a resource
+      description: Returns the student and/or teacher users for a resource
+      operationId: getUsersForResource
+      parameters:
+      - name: id
+        in: path
+        description: ID of the resource
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: query
+        description: "Restrict the results to users with this role, such as student\
+          \ or teacher"
+        schema:
+          type: string
+          enum:
+          - student
+          - teacher
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /schools:
+    get:
+      tags:
+      - Schools
+      summary: List schools
+      description: Returns a list of schools
+      operationId: getSchools
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      - name: count
+        in: query
+        description: |
+          If "true", returns a CountResponse ({count, links})
+          instead of the normal list response.
+        schema:
+          type: string
+          enum:
+          - ""
+          - "true"
+          - "false"
+          - undefined
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchoolsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /schools/{id}:
+    get:
+      tags:
+      - Schools
+      summary: Get a school
+      description: Returns a specific school
+      operationId: getSchool
+      parameters:
+      - name: id
+        in: path
+        description: ID of the school
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchoolResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /schools/{id}/courses:
+    get:
+      tags:
+      - Schools
+      summary: List the courses of a school
+      description: Returns the courses for a school
+      operationId: getCoursesForSchool
+      parameters:
+      - name: id
+        in: path
+        description: ID of the school
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoursesResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /schools/{id}/district:
+    get:
+      tags:
+      - Schools
+      summary: Get the district of a school
+      description: Returns the district for a school
+      operationId: getDistrictForSchool
+      parameters:
+      - name: id
+        in: path
+        description: ID of the school
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistrictResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /schools/{id}/sections:
+    get:
+      tags:
+      - Schools
+      summary: List the sections of a school
+      description: Returns the sections for a school
+      operationId: getSectionsForSchool
+      parameters:
+      - name: id
+        in: path
+        description: ID of the school
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /schools/{id}/terms:
+    get:
+      tags:
+      - Schools
+      summary: List the terms of a school
+      description: Returns the terms for a school
+      operationId: getTermsForSchool
+      parameters:
+      - name: id
+        in: path
+        description: ID of the school
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TermsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /schools/{id}/users:
+    get:
+      tags:
+      - Schools
+      summary: List the users of a school
+      description: "Returns the staff, student, and/or teacher users for a school"
+      operationId: getUsersForSchool
+      parameters:
+      - name: id
+        in: path
+        description: ID of the school
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: query
+        description: "Restrict the results to users with this role, such as student\
+          \ or teacher"
+        schema:
+          type: string
+          enum:
+          - staff
+          - student
+          - teacher
+      - name: primary
+        in: query
+        description: Set to `true` to return only users whose relationship to the
+          entity is marked as primary
+        schema:
+          type: string
+          enum:
+          - ""
+          - "true"
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections:
+    get:
+      tags:
+      - Sections
+      summary: List sections
+      description: Returns a list of sections
+      operationId: getSections
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      - name: count
+        in: query
+        description: |
+          If "true", returns a CountResponse ({count, links})
+          instead of the normal list response.
+        schema:
+          type: string
+          enum:
+          - ""
+          - "true"
+          - "false"
+          - undefined
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections/{id}:
+    get:
+      tags:
+      - Sections
+      summary: Get a section
+      description: Returns a specific section
+      operationId: getSection
+      parameters:
+      - name: id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections/{id}/course:
+    get:
+      tags:
+      - Sections
+      summary: Get the course of a section
+      description: Returns the course for a section
+      operationId: getCourseForSection
+      parameters:
+      - name: id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections/{id}/district:
+    get:
+      tags:
+      - Sections
+      summary: Get the district of a section
+      description: Returns the district for a section
+      operationId: getDistrictForSection
+      parameters:
+      - name: id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistrictResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections/{id}/resources:
+    get:
+      tags:
+      - Sections
+      summary: List the resources of a section
+      description: Returns the resources for a section
+      operationId: getResourcesForSection
+      parameters:
+      - name: id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourcesResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections/{id}/school:
+    get:
+      tags:
+      - Sections
+      summary: Get the school of a section
+      description: Returns the school for a section
+      operationId: getSchoolForSection
+      parameters:
+      - name: id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchoolResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections/{id}/term:
+    get:
+      tags:
+      - Sections
+      summary: Get the term of a section
+      description: Returns the term for a section
+      operationId: getTermForSection
+      parameters:
+      - name: id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TermResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections/{id}/users:
+    get:
+      tags:
+      - Sections
+      summary: List the users of a section
+      description: Returns the student and/or teacher users for a section
+      operationId: getUsersForSection
+      parameters:
+      - name: id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: query
+        description: "Restrict the results to users with this role, such as student\
+          \ or teacher"
+        schema:
+          type: string
+          enum:
+          - student
+          - teacher
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /terms:
+    get:
+      tags:
+      - Terms
+      summary: List terms
+      description: Returns a list of terms
+      operationId: getTerms
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      - name: count
+        in: query
+        description: |
+          If "true", returns a CountResponse ({count, links})
+          instead of the normal list response.
+        schema:
+          type: string
+          enum:
+          - ""
+          - "true"
+          - "false"
+          - undefined
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TermsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /terms/{id}:
+    get:
+      tags:
+      - Terms
+      summary: Get a term
+      description: Returns a specific term
+      operationId: getTerm
+      parameters:
+      - name: id
+        in: path
+        description: ID of the term
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TermResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /terms/{id}/district:
+    get:
+      tags:
+      - Terms
+      summary: Get the district of a term
+      description: Returns the district for a term
+      operationId: getDistrictForTerm
+      parameters:
+      - name: id
+        in: path
+        description: ID of the term
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistrictResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /terms/{id}/sections:
+    get:
+      tags:
+      - Terms
+      summary: List the sections of a term
+      description: Returns the sections for a term
+      operationId: getSectionsForTerm
+      parameters:
+      - name: id
+        in: path
+        description: ID of the term
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /terms/{id}/schools:
+    get:
+      tags:
+      - Terms
+      summary: List the schools of a term
+      description: Returns the schools for a term
+      operationId: getSchoolsForTerm
+      parameters:
+      - name: id
+        in: path
+        description: ID of the term
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchoolsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users:
+    get:
+      tags:
+      - Users
+      summary: List users
+      description: "Returns a list of contact, district admin, staff, student, and/or\
+        \ teacher users"
+      operationId: getUsers
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: role
+        in: query
+        description: "Restrict the results to users with this role, such as student\
+          \ or teacher"
+        schema:
+          type: string
+          enum:
+          - contact
+          - district_admin
+          - staff
+          - student
+          - teacher
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      - name: count
+        in: query
+        description: |
+          If "true", returns a CountResponse ({count, links})
+          instead of the normal list response.
+        schema:
+          type: string
+          enum:
+          - ""
+          - "true"
+          - "false"
+          - undefined
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users/{id}:
+    get:
+      tags:
+      - Users
+      summary: Get a user
+      description: Returns a specific user
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users/{id}/district:
+    get:
+      tags:
+      - Users
+      summary: Get the district of a user
+      description: Returns the district for a user
+      operationId: getDistrictForUser
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistrictResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users/{id}/mycontacts:
+    get:
+      tags:
+      - Users
+      summary: List the contacts of a user
+      description: Returns the contact users for a student user
+      operationId: getContactsForUser
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users/{id}/mystudents:
+    get:
+      tags:
+      - Users
+      summary: List the students of a user
+      description: Returns the student users for a teacher or contact user
+      operationId: getStudentsForUser
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users/{id}/myteachers:
+    get:
+      tags:
+      - Users
+      summary: List the teachers of a user
+      description: Returns the teacher users for a student user
+      operationId: getTeachersForUser
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users/{id}/resources:
+    get:
+      tags:
+      - Users
+      summary: List the resources of a user
+      description: Returns the resources for a user
+      operationId: getResourcesForUser
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourcesResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users/{id}/schools:
+    get:
+      tags:
+      - Users
+      summary: List the schools of a user
+      description: Returns the schools for a user
+      operationId: getSchoolsForUser
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+      - name: primary
+        in: query
+        description: Set to `true` to return only users whose relationship to the
+          entity is marked as primary
+        schema:
+          type: string
+          enum:
+          - ""
+          - "true"
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchoolsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /users/{id}/sections:
+    get:
+      tags:
+      - Users
+      summary: List the sections of a user
+      description: Returns the sections for a user
+      operationId: getSectionsForUser
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectionsResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /sections/{section_id}/assignments:
+    post:
+      tags:
+      - Assignments
+      summary: Create an assignment in a section
+      description: Creates a new assignment in the specified section
+      operationId: createAssignmentForSection
+      parameters:
+      - name: section_id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssignmentRequest"
+        required: true
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      x-codegen-request-body-name: assignmentRequestBody
+  /sections/{section_id}/assignments/{assignment_id}:
+    get:
+      tags:
+      - Assignments
+      summary: Get an assignment of a section
+      description: Returns a specific assignment for a section
+      operationId: getAssignmentForSection
+      parameters:
+      - name: section_id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      - name: assignment_id
+        in: path
+        description: ID of the assignment in the section
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+      - Assignments
+      summary: Delete an assignment of a section
+      description: Deletes an existing assignment in the specified section
+      operationId: deleteAssignmentForSection
+      parameters:
+      - name: section_id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      - name: assignment_id
+        in: path
+        description: ID of the assignment in the section
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content: {}
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+      - Assignments
+      summary: Update an assignment of a section
+      description: Updates an existing assignment in the specified section
+      operationId: updateAssignmentForSection
+      parameters:
+      - name: section_id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      - name: assignment_id
+        in: path
+        description: ID of the assignment in the section
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssignmentRequest"
+        required: true
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalError"
+      x-codegen-request-body-name: assignmentRequestBody
+  /sections/{section_id}/assignments/{assignment_id}/submissions:
+    get:
+      tags:
+      - Assignments
+      summary: List submissions for an assignment
+      description: Returns the submissions for an assignment.
+      operationId: getSubmissionsForAssignment
+      parameters:
+      - name: section_id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      - name: assignment_id
+        in: path
+        description: ID of the assignment in the section
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Opaque pagination cursor taken from the `next` link of the previous
+          page of submissions
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmissionsResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /sections/{section_id}/assignments/{assignment_id}/submissions/{user_id}:
+    get:
+      tags:
+      - Submissions
+      summary: Get the submission of a user for an assignment
+      description: Returns a specific user's submission for an assignment.
+      operationId: getSubmissionForAssignment
+      parameters:
+      - name: section_id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      - name: assignment_id
+        in: path
+        description: ID of the assignment in the section
+        required: true
+        schema:
+          type: string
+      - name: user_id
+        in: path
+        description: ID of the user who owns the submission
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmissionResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+      - Submissions
+      summary: Update the submission of a user for an assignment
+      description: Updates an existing submission in the specified assignment for
+        a user.
+      operationId: updateSubmissionForAssignment
+      parameters:
+      - name: section_id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      - name: assignment_id
+        in: path
+        description: ID of the assignment in the section
+        required: true
+        schema:
+          type: string
+      - name: user_id
+        in: path
+        description: ID of the user who owns the submission
+        required: true
+        schema:
+          type: string
+          format: mongo-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmissionRequest"
+        required: true
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmissionResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalError"
+      x-codegen-request-body-name: submissionRequestBody
+  /attendance/schools/{school_id}:
+    get:
+      summary: Returns a list of attendance records for a school
+      operationId: listAttendanceForSchool
+      parameters:
+      - name: school_id
+        in: path
+        description: ID of the school
+        required: true
+        schema:
+          type: string
+      - name: date_range_start
+        in: query
+        description: "First attendance date to include, in YYYY-MM-DD format"
+        schema:
+          type: string
+          format: date
+      - name: date_range_end
+        in: query
+        description: "Last attendance date to include, in YYYY-MM-DD format"
+        schema:
+          type: string
+          format: date
+      - name: attendance_status
+        in: query
+        description: Restrict the results to attendance records with this status
+        schema:
+          type: string
+          enum:
+          - present
+          - absent
+          - tardy
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttendanceResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /attendance/sections/{section_id}:
+    get:
+      summary: Returns a list of attendance records for a section
+      operationId: listAttendanceForSection
+      parameters:
+      - name: section_id
+        in: path
+        description: ID of the section
+        required: true
+        schema:
+          type: string
+      - name: date_range_start
+        in: query
+        description: "First attendance date to include, in YYYY-MM-DD format"
+        schema:
+          type: string
+          format: date
+      - name: date_range_end
+        in: query
+        description: "Last attendance date to include, in YYYY-MM-DD format"
+        schema:
+          type: string
+          format: date
+      - name: attendance_status
+        in: query
+        description: Restrict the results to attendance records with this status
+        schema:
+          type: string
+          enum:
+          - present
+          - absent
+          - tardy
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttendanceResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+  /events:
+    get:
+      tags:
+      - Events
+      summary: List data change events
+      description: Returns a list of events
+      operationId: getEvents
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of records to return in one page
+        schema:
+          type: integer
+      - name: starting_after
+        in: query
+        description: "Cursor for forward pagination: the ID of the last record of\
+          \ the previous page, so the page returned starts after it"
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: "Cursor for backward pagination: the ID of the first record of\
+          \ the next page, so the page returned ends before it"
+        schema:
+          type: string
+      - name: school
+        in: query
+        description: ID of a school; only events for this school are returned
+        schema:
+          type: string
+      - name: record_type
+        in: query
+        description: "Restrict the events to these record types, such as `users.updated`\
+          \ or `sections.created`; may be repeated"
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventsResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /events/{id}:
+    get:
+      tags:
+      - Events
+      summary: Get a data change event
+      description: Returns the specific event
+      operationId: getEvent
+      parameters:
+      - name: id
+        in: path
+        description: ID of the event
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+components:
+  schemas:
+    BadRequest:
+      type: object
+      properties:
+        message:
+          type: string
+    InternalError:
+      type: object
+      properties:
+        message:
+          type: string
+    Unauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+    Link:
+      type: object
+      properties:
+        rel:
+          type: string
+          description: "Relation of the linked page to the current response, one of\
+            \ `next`, `prev` or `self`"
+          enum:
+          - next
+          - prev
+          - self
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+      description: "A link to a related page of results. `rel` identifies which page\
+        \ this is, and `uri` is the relative path to it (including the API version\
+        \ prefix). `next` corresponds to the `starting_after` parameter, `prev` to\
+        \ `ending_before`, and `self` repeats the current request."
+      example:
+        rel: next
+        uri: /v3.1/users?starting_after=55417deec7f551010000000d
+    NotFound:
+      type: object
+      properties:
+        message:
+          type: string
+    CountResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+      description: "Returned instead of the normal list response when the `count`\
+        \ query\nparameter is set to \"true\". \n"
+    CoursesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourseResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+    CourseResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Course"
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourseLink"
+    CourseLink:
+      type: object
+      properties:
+        rel:
+          type: string
+          description: "Relation of the linked page to the current response, one of\
+            \ `next`, `prev` or `self`"
+          enum:
+          - self
+          - district
+          - schools
+          - sections
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+      description: "A link to a related resource. `rel` identifies the relationship,\
+        \ and `uri` is the relative path to that resource (including the API version\
+        \ prefix)."
+      example:
+        rel: sections
+        uri: /v3.1/courses/4fee004cca2e43cf2700028b/sections
+    DistrictsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DistrictResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+    DistrictResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/District"
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/DistrictLink"
+    DistrictLink:
+      type: object
+      properties:
+        rel:
+          type: string
+          description: "Relation of the linked page to the current response, one of\
+            \ `next`, `prev` or `self`"
+          enum:
+          - self
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+      description: "A link to a related resource. `rel` identifies the relationship,\
+        \ and `uri` is the relative path to that resource (including the API version\
+        \ prefix)."
+      example:
+        rel: self
+        uri: /v3.1/districts/55417deec7f551010000000d
+    ResourcesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResourceResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+    ResourceResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Resource"
+    SectionsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/SectionResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+    SectionResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Section"
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/SectionLink"
+    SectionLink:
+      type: object
+      properties:
+        rel:
+          type: string
+          description: "Relation of the linked page to the current response, one of\
+            \ `next`, `prev` or `self`"
+          enum:
+          - self
+          - district
+          - school
+          - course
+          - term
+          - users
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+      description: "A link to a related resource. `rel` identifies the relationship,\
+        \ and `uri` is the relative path to that resource (including the API version\
+        \ prefix)."
+      example:
+        rel: users
+        uri: /v3.1/sections/55417deec7f551010000000d/users
+    SchoolsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/SchoolResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+    SchoolResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/School"
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/SchoolLink"
+    SchoolLink:
+      type: object
+      properties:
+        rel:
+          type: string
+          description: "Relation of the linked page to the current response, one of\
+            \ `next`, `prev` or `self`"
+          enum:
+          - self
+          - district
+          - courses
+          - sections
+          - terms
+          - users
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+      description: "A link to a related resource. `rel` identifies the relationship,\
+        \ and `uri` is the relative path to that resource (including the API version\
+        \ prefix)."
+      example:
+        rel: users
+        uri: /v3.1/schools/55417deec7f551010000000d/users
+    TermsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/TermResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+    TermResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Term"
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/TermLink"
+    TermLink:
+      type: object
+      properties:
+        rel:
+          type: string
+          description: "Relation of the linked page to the current response, one of\
+            \ `next`, `prev` or `self`"
+          enum:
+          - self
+          - district
+          - schools
+          - sections
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+      description: "A link to a related resource. `rel` identifies the relationship,\
+        \ and `uri` is the relative path to that resource (including the API version\
+        \ prefix)."
+      example:
+        rel: sections
+        uri: /v3.1/terms/4fee004cca2e43cf2700028b/sections
+    UsersResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+    UserResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/User"
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserLink"
+    UserLink:
+      type: object
+      properties:
+        rel:
+          type: string
+          description: "The relation this link represents. The user's role determines\
+            \ which enum values are present and valid (e.g., myTeachers only appears\
+            \ for student users, etc.)."
+          enum:
+          - self
+          - district
+          - schools
+          - sections
+          - myContacts
+          - myStudents
+          - myTeachers
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+      description: "A link to a related resource. `rel` identifies the relationship,\
+        \ and `uri` is the relative path to that resource (including the API version\
+        \ prefix)."
+      example:
+        rel: schools
+        uri: /v3.1/users/55417deec7f551010000000d/schools
+    Course:
+      type: object
+      properties:
+        id:
+          type: string
+          x-validation: true
+        name:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+        district:
+          type: string
+          x-validation: true
+    Credentials:
+      type: object
+      properties:
+        district_username:
+          type: string
+    Disability:
+      type: object
+      properties:
+        disability_status:
+          type: string
+          nullable: true
+          enum:
+          - "Y"
+          - "N"
+          - ""
+        disability_code:
+          type: string
+          nullable: true
+          enum:
+          - aut
+          - db
+          - dd
+          - emn
+          - hi
+          - id
+          - md
+          - oi
+          - other
+          - ohi
+          - sld
+          - sli
+          - tbi
+          - vi
+        disability_type:
+          type: string
+          nullable: true
+          enum:
+          - Autism
+          - Deaf-blindness
+          - Developmental delay
+          - Emotional disturbance
+          - Hearing impairment
+          - Intellectual Disability
+          - Multiple disabilities
+          - Orthopedic impairment
+          - Other
+          - Other health impairment
+          - Specific learning disability
+          - Speech or language impairment
+          - Traumatic brain injury
+          - Visual impairment
+    District:
+      type: object
+      properties:
+        id:
+          type: string
+          x-validation: true
+        lms_state:
+          type: string
+          nullable: true
+          enum:
+          - initial_sync_processing
+          - pending_authorization
+          - matching_in_progress
+          - error
+          - disconnected
+          - ""
+          - success
+          x-validation: true
+        lms_type:
+          type: string
+          nullable: true
+          enum:
+          - canvas
+          - schoology
+          - google_classroom
+          - ""
+          x-validation: true
+        name:
+          type: string
+        mdr_number:
+          type: string
+          nullable: true
+        nces_id:
+          type: string
+          nullable: true
+        sis_type:
+          type: string
+          x-validation: true
+        state:
+          type: string
+          nullable: true
+          enum:
+          - running
+          - pending
+          - error
+          - paused
+          - ""
+          - success
+          x-validation: true
+        last_sync:
+          type: string
+          format: datetime
+          nullable: true
+          x-validation: true
+        last_attendance_sync:
+          type: string
+          format: datetime
+          nullable: true
+          x-validation: true
+        error:
+          type: string
+        pause_start:
+          type: string
+          format: datetime
+          nullable: true
+          x-validation: true
+        pause_end:
+          type: string
+          format: datetime
+          nullable: true
+          x-validation: true
+        launch_date:
+          type: string
+          format: date
+          x-validation: true
+        portal_url:
+          type: string
+        login_methods:
+          type: array
+          items:
+            type: string
+          x-validation: true
+        district_contact:
+          $ref: "#/components/schemas/DistrictContact"
+    Location:
+      type: object
+      properties:
+        address:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        zip:
+          type: string
+          nullable: true
+        lat:
+          type: string
+          nullable: true
+        lon:
+          type: string
+          nullable: true
+    LmsStatus:
+      type: object
+      properties:
+        synced_in_lms:
+          type: boolean
+    Name:
+      type: object
+      properties:
+        first:
+          type: string
+          nullable: true
+        middle:
+          type: string
+          nullable: true
+        last:
+          type: string
+          nullable: true
+    Principal:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+    PreferredName:
+      type: object
+      properties:
+        first:
+          type: string
+          nullable: true
+        middle:
+          type: string
+          nullable: true
+        last:
+          type: string
+          nullable: true
+    Resource:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+        district:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+            enum:
+            - teacher
+            - student
+        id:
+          type: string
+        title:
+          type: string
+        updated:
+          type: string
+          format: date-time
+        resource_id:
+          type: string
+    Roles:
+      type: object
+      properties:
+        contact:
+          $ref: "#/components/schemas/Contact"
+        district_admin:
+          $ref: "#/components/schemas/DistrictAdmin"
+        staff:
+          $ref: "#/components/schemas/Staff"
+        student:
+          $ref: "#/components/schemas/Student"
+        teacher:
+          $ref: "#/components/schemas/Teacher"
+    School:
+      type: object
+      properties:
+        id:
+          type: string
+          x-validation: true
+        created:
+          type: string
+          format: datetime
+          x-validation: true
+        district:
+          type: string
+          x-validation: true
+        high_grade:
+          type: string
+          nullable: true
+          enum:
+          - InfantToddler
+          - Preschool
+          - PreKindergarten
+          - TransitionalKindergarten
+          - Kindergarten
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+          - "8"
+          - "9"
+          - "10"
+          - "11"
+          - "12"
+          - "13"
+          - PostGraduate
+          - Ungraded
+          - Other
+          - ""
+          x-validation: true
+        last_modified:
+          type: string
+          format: datetime
+          x-validation: true
+        location:
+          $ref: "#/components/schemas/Location"
+        low_grade:
+          type: string
+          nullable: true
+          enum:
+          - InfantToddler
+          - Preschool
+          - PreKindergarten
+          - TransitionalKindergarten
+          - Kindergarten
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+          - "8"
+          - "9"
+          - "10"
+          - "11"
+          - "12"
+          - "13"
+          - PostGraduate
+          - Ungraded
+          - Other
+          - ""
+          x-validation: true
+        name:
+          type: string
+        nces_id:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        principal:
+          $ref: "#/components/schemas/Principal"
+        school_number:
+          type: string
+        sis_id:
+          type: string
+        state_id:
+          type: string
+          nullable: true
+        mdr_number:
+          type: string
+          nullable: true
+        ext:
+          type: object
+          properties: {}
+    SchoolEnrollment:
+      type: object
+      properties:
+        school:
+          type: string
+          x-validation: true
+        start_date:
+          type: string
+          format: datetime
+          x-validation: true
+        end_date:
+          type: string
+          format: datetime
+          x-validation: true
+    Section:
+      type: object
+      properties:
+        id:
+          type: string
+          x-validation: true
+        course:
+          type: string
+          nullable: true
+          x-validation: true
+        created:
+          type: string
+          format: datetime
+          x-validation: true
+        district:
+          type: string
+          x-validation: true
+        grade:
+          type: string
+          nullable: true
+          enum:
+          - InfantToddler
+          - Preschool
+          - PreKindergarten
+          - TransitionalKindergarten
+          - Kindergarten
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+          - "8"
+          - "9"
+          - "10"
+          - "11"
+          - "12"
+          - "13"
+          - PostGraduate
+          - Ungraded
+          - Other
+          - ""
+          x-validation: true
+        last_modified:
+          type: string
+          format: datetime
+          x-validation: true
+        lms_status:
+          $ref: "#/components/schemas/LmsStatus"
+        name:
+          type: string
+        period:
+          type: string
+          nullable: true
+        school:
+          type: string
+          x-validation: true
+        section_number:
+          type: string
+          nullable: true
+        sis_id:
+          type: string
+        students:
+          type: array
+          items:
+            type: string
+          x-validation: true
+        subject:
+          type: string
+          nullable: true
+          enum:
+          - english/language arts
+          - math
+          - science
+          - social studies
+          - language
+          - homeroom/advisory
+          - interventions/online learning
+          - technology and engineering
+          - PE and health
+          - arts and music
+          - other
+          - ""
+          x-validation: true
+        teacher:
+          type: string
+          nullable: true
+          x-validation: true
+        teachers:
+          type: array
+          items:
+            type: string
+          x-validation: true
+        term_id:
+          type: string
+          nullable: true
+          x-validation: true
+        ext:
+          type: object
+          properties: {}
+    StudentRelationship:
+      type: object
+      properties:
+        student:
+          type: string
+          x-validation: true
+        relationship:
+          type: string
+          nullable: true
+          enum:
+          - Parent
+          - Grandparent
+          - Self
+          - Aunt/Uncle
+          - Sibling
+          - Other
+          - ""
+          x-validation: true
+        type:
+          type: string
+          nullable: true
+          enum:
+          - Parent/Guardian
+          - Emergency
+          - Primary
+          - Secondary
+          - Family
+          - Other
+          - ""
+          x-validation: true
+    Term:
+      type: object
+      properties:
+        id:
+          type: string
+          x-validation: true
+        name:
+          type: string
+          nullable: true
+        start_date:
+          type: string
+          format: datetime
+          nullable: true
+          x-validation: true
+        end_date:
+          type: string
+          format: datetime
+          nullable: true
+          x-validation: true
+        district:
+          type: string
+          x-validation: true
+    Contact:
+      type: object
+      properties:
+        legacy_id:
+          type: string
+          x-validation: true
+        phone:
+          type: string
+          nullable: true
+        phone_type:
+          type: string
+          nullable: true
+          enum:
+          - Cell
+          - Home
+          - Work
+          - Other
+          - ""
+          x-validation: true
+        sis_id:
+          type: string
+          nullable: true
+        student_relationships:
+          type: array
+          items:
+            $ref: "#/components/schemas/StudentRelationship"
+          x-validation: true
+    DistrictAdmin:
+      type: object
+      properties:
+        legacy_id:
+          type: string
+          x-validation: true
+        title:
+          type: string
+          nullable: true
+    Staff:
+      type: object
+      properties:
+        legacy_id:
+          type: string
+          x-validation: true
+        credentials:
+          $ref: "#/components/schemas/Credentials"
+        department:
+          type: string
+          nullable: true
+        roles:
+          type: array
+          items:
+            type: string
+          x-validation: true
+        schools:
+          type: array
+          items:
+            type: string
+          x-validation: true
+        staff_id:
+          type: string
+        title:
+          type: string
+          nullable: true
+        ext:
+          type: object
+          properties: {}
+    Student:
+      type: object
+      properties:
+        legacy_id:
+          type: string
+          x-validation: true
+        created:
+          type: string
+          format: datetime
+          x-validation: true
+        credentials:
+          $ref: "#/components/schemas/Credentials"
+        disability:
+          $ref: "#/components/schemas/Disability"
+        dob:
+          pattern: "(?:[0-9]{1,2})/([0-9]{1,2})/([0-9]{4})"
+          type: string
+          nullable: true
+          x-validation: true
+        ell_status:
+          type: string
+          nullable: true
+          enum:
+          - "Y"
+          - "N"
+          - ""
+          x-validation: true
+        enrollments:
+          type: array
+          items:
+            $ref: "#/components/schemas/SchoolEnrollment"
+          x-validation: true
+        frl_status:
+          type: string
+          nullable: true
+          enum:
+          - Free
+          - Reduced
+          - Paid
+          - Other
+          - ""
+          x-validation: true
+        gender:
+          type: string
+          nullable: true
+          enum:
+          - M
+          - F
+          - X
+          - ""
+          x-validation: true
+        gifted_status:
+          type: string
+          nullable: true
+          enum:
+          - "Y"
+          - "N"
+          - ""
+          x-validation: true
+        graduation_year:
+          type: string
+          nullable: true
+          x-validation: true
+        grade:
+          type: string
+          nullable: true
+          enum:
+          - InfantToddler
+          - Preschool
+          - PreKindergarten
+          - TransitionalKindergarten
+          - Kindergarten
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+          - "8"
+          - "9"
+          - "10"
+          - "11"
+          - "12"
+          - "13"
+          - PostGraduate
+          - Ungraded
+          - Other
+          - ""
+          x-validation: true
+        hispanic_ethnicity:
+          type: string
+          nullable: true
+          enum:
+          - "Y"
+          - "N"
+          - ""
+          x-validation: true
+        home_language:
+          type: string
+          nullable: true
+          enum:
+          - English
+          - Albanian
+          - Amharic
+          - Arabic
+          - Bengali
+          - Bosnian
+          - Burmese
+          - Cantonese
+          - Chinese
+          - Dutch
+          - Farsi
+          - French
+          - German
+          - Hebrew
+          - Hindi
+          - Hmong
+          - Ilocano
+          - Japanese
+          - Javanese
+          - Karen
+          - Khmer
+          - Korean
+          - Laotian
+          - Latvian
+          - Malay
+          - Mandarin
+          - Nepali
+          - Oromo
+          - Polish
+          - Portuguese
+          - Punjabi
+          - Romanian
+          - Russian
+          - Samoan
+          - Serbian
+          - Somali
+          - Spanish
+          - Swahili
+          - Tagalog
+          - Tamil
+          - Telugu
+          - Thai
+          - Tigrinya
+          - Turkish
+          - Ukrainian
+          - Urdu
+          - Vietnamese
+          - ""
+          x-validation: true
+        home_language_code:
+          type: string
+          nullable: true
+          x-validation: true
+        iep_status:
+          type: string
+          nullable: true
+        last_modified:
+          type: string
+          format: datetime
+          x-validation: true
+        location:
+          $ref: "#/components/schemas/Location"
+        preferred_name:
+          $ref: "#/components/schemas/PreferredName"
+        race:
+          type: string
+          nullable: true
+          enum:
+          - Caucasian
+          - Asian
+          - Black or African American
+          - American Indian
+          - Hawaiian or Other Pacific Islander
+          - Two or More Races
+          - Unknown
+          - ""
+          x-validation: true
+        school:
+          type: string
+          x-validation: true
+        schools:
+          type: array
+          items:
+            type: string
+          x-validation: true
+        section_504_status:
+          type: string
+          nullable: true
+          enum:
+          - "Y"
+          - "N"
+          - ""
+          x-validation: true
+        sis_id:
+          type: string
+        state_id:
+          type: string
+          nullable: true
+        student_number:
+          type: string
+          nullable: true
+        unweighted_gpa:
+          type: string
+          nullable: true
+        weighted_gpa:
+          type: string
+          nullable: true
+        ext:
+          type: object
+          properties: {}
+    Teacher:
+      type: object
+      properties:
+        legacy_id:
+          type: string
+          x-validation: true
+        created:
+          type: string
+          format: datetime
+          x-validation: true
+        credentials:
+          $ref: "#/components/schemas/Credentials"
+        district:
+          type: string
+          x-validation: true
+        last_modified:
+          type: string
+          format: datetime
+          x-validation: true
+        name:
+          $ref: "#/components/schemas/Name"
+        school:
+          type: string
+          x-validation: true
+        schools:
+          type: array
+          items:
+            type: string
+          x-validation: true
+        sis_id:
+          type: string
+        state_id:
+          type: string
+          nullable: true
+        teacher_number:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        ext:
+          type: object
+          properties: {}
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          x-validation: true
+        created:
+          type: string
+          format: datetime
+          x-validation: true
+        district:
+          type: string
+          x-validation: true
+        email:
+          type: string
+          nullable: true
+        last_modified:
+          type: string
+          format: datetime
+          x-validation: true
+        lms_status:
+          $ref: "#/components/schemas/LmsStatus"
+        name:
+          $ref: "#/components/schemas/Name"
+        roles:
+          $ref: "#/components/schemas/Roles"
+    DistrictContact:
+      type: object
+      properties:
+        id:
+          type: string
+          x-validation: true
+        title:
+          type: string
+          x-validation: true
+        district:
+          type: string
+          x-validation: true
+        email:
+          type: string
+          nullable: true
+        name:
+          $ref: "#/components/schemas/Name"
+    CourseObject:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/Course"
+    DistrictObject:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/District"
+    ResourceObject:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/Resource"
+    SchoolObject:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/School"
+    SectionObject:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/Section"
+    TermObject:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/Term"
+    UserObject:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/User"
+    Assignment:
+      type: object
+      properties:
+        id:
+          type: string
+        created:
+          type: string
+          format: datetime
+          nullable: true
+        last_modified:
+          type: string
+          format: datetime
+          nullable: true
+        description:
+          type: string
+        due_date:
+          type: string
+          format: datetime
+          nullable: true
+        grading_type:
+          $ref: "#/components/schemas/GradingType"
+        state:
+          $ref: "#/components/schemas/AssignmentState"
+        title:
+          type: string
+        assignee_ids:
+          type: array
+          items:
+            type: string
+          x-omitempty: true
+        assignee_mode:
+          $ref: "#/components/schemas/AssigneeMode"
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attachment"
+          x-omitempty: true
+        category_id:
+          type: string
+          nullable: true
+        description_plaintext:
+          type: string
+          nullable: true
+        display_date:
+          type: string
+          format: datetime
+          nullable: true
+        end_date:
+          type: string
+          format: datetime
+          nullable: true
+        grading_scale:
+          type: array
+          items:
+            $ref: "#/components/schemas/GradingScale"
+          x-omitempty: true
+        max_attempts:
+          type: integer
+          x-omitempty: true
+        points_possible:
+          type: number
+          format: float
+          nullable: true
+        start_date:
+          type: string
+          format: datetime
+          nullable: true
+        submission_types:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionType"
+          x-omitempty: true
+        term_id:
+          type: string
+          nullable: true
+    Submission:
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            Deprecated. The Clever unique identifier of the submission. Will always be empty if the
+            upstream LMS provider is Google Classroom; it is currently still present for Canvas and
+            Schoology LMSs but will be removed in the near future.
+        created:
+          type: string
+          format: datetime
+          nullable: true
+        assignment_id:
+          type: string
+        state:
+          $ref: "#/components/schemas/SubmissionState"
+        user_id:
+          type: string
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attachment"
+          x-omitempty: true
+        extra_attempts:
+          type: integer
+          x-omitempty: true
+        flags:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionFlag"
+          x-omitempty: true
+        grade:
+          type: string
+          nullable: true
+        grade_comment:
+          type: string
+          nullable: true
+        grade_points:
+          type: number
+          format: float
+          x-omitempty: true
+        grader_id:
+          type: string
+          nullable: true
+        last_modified:
+          type: string
+          format: datetime
+          nullable: true
+        override_due_date:
+          type: string
+          format: datetime
+          nullable: true
+    AssigneeMode:
+      type: string
+      enum:
+      - all
+      - individuals
+    AssignmentState:
+      type: string
+      enum:
+      - draft
+      - scheduled
+      - open
+      - locked
+    Attachment:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        file_external_id:
+          type: string
+          nullable: true
+        size:
+          type: number
+          format: float
+          x-omitempty: true
+        thumbnail_url:
+          type: string
+          nullable: true
+        url:
+          type: string
+          nullable: true
+    GradingScale:
+      type: object
+      properties:
+        name:
+          type: string
+        entries:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/GradingScaleEntry"
+    GradingScaleEntry:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    GradingType:
+      type: string
+      enum:
+      - points
+      - percent
+      - pass_fail
+      - letter_grade
+    SubmissionType:
+      type: string
+      enum:
+      - link
+      - file
+      - text
+      - discussion
+    SubmissionFlag:
+      type: string
+      enum:
+      - excused
+      - late
+      - missing
+    SubmissionState:
+      type: string
+      enum:
+      - created
+      - submitted
+      - returned
+      - reclaimed
+    AssignmentRequest:
+      type: object
+      properties:
+        description:
+          type: string
+          nullable: true
+        due_date:
+          type: string
+          format: datetime
+          nullable: true
+        grading_type:
+          $ref: "#/components/schemas/GradingType"
+        points_possible:
+          type: number
+          format: float
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        assignee_ids:
+          type: array
+          items:
+            type: string
+          x-omitempty: true
+        assignee_mode:
+          $ref: "#/components/schemas/AssigneeMode"
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/AttachmentRequest"
+          x-omitempty: true
+        description_plaintext:
+          type: string
+          nullable: true
+        display_date:
+          type: string
+          format: datetime
+          nullable: true
+        end_date:
+          type: string
+          format: datetime
+          nullable: true
+        max_attempts:
+          type: integer
+          x-omitempty: true
+        start_date:
+          type: string
+          format: datetime
+          nullable: true
+        submission_types:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionType"
+          x-omitempty: true
+        term_id:
+          type: string
+          nullable: true
+    AttachmentRequest:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - file
+        title:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        url:
+          type: string
+          nullable: true
+    SubmissionRequest:
+      type: object
+      properties:
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/AttachmentRequest"
+          x-omitempty: true
+        extra_attempts:
+          type: integer
+          x-omitempty: true
+        flags:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionFlag"
+          x-omitempty: true
+        grade:
+          type: string
+          nullable: true
+        grade_comment:
+          type: string
+          nullable: true
+        grade_points:
+          type: number
+          format: float
+          x-omitempty: true
+        grader_id:
+          type: string
+          nullable: true
+        override_due_date:
+          type: string
+          format: datetime
+          nullable: true
+        state:
+          $ref: "#/components/schemas/SubmissionState"
+    AssignmentResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Assignment"
+    SubmissionResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Submission"
+    SubmissionsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Submission"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionsLink"
+          x-omitempty: true
+    SubmissionsLink:
+      type: object
+      properties:
+        rel:
+          type: string
+          description: "Relation of the linked page to the current response, one of\
+            \ `next`, `prev` or `self`"
+          enum:
+          - next
+        uri:
+          type: string
+          description: "Relative URI of the linked resource or page, including the\
+            \ API version prefix"
+    Attendance:
+      type: object
+      properties:
+        district_id:
+          type: string
+          format: mongo-id
+        school_id:
+          type: string
+          format: mongo-id
+        student_id:
+          type: string
+          format: mongo-id
+        sis_id:
+          type: string
+        section_id:
+          type: string
+          format: mongo-id
+        created:
+          type: string
+          format: datetime
+        last_modified:
+          type: string
+          format: datetime
+        attendance_date:
+          type: string
+          format: date
+        attendance_status:
+          $ref: "#/components/schemas/AttendanceStatus"
+        attendance_type:
+          $ref: "#/components/schemas/AttendanceType"
+        excuse_code:
+          type: string
+    AttendanceStatus:
+      type: string
+      enum:
+      - present
+      - absent
+      - tardy
+    AttendanceType:
+      type: string
+      enum:
+      - daily
+      - section
+    AttendanceResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attendance"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+          x-omitempty: true
+    EventsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+    EventResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Event"
+    Event:
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          x-validation: true
+        id:
+          type: string
+          x-validation: true
+        created:
+          type: string
+          format: datetime
+          x-validation: true
+      discriminator:
+        propertyName: type
+    courses.updated:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/CourseObject"
+          previous_attributes:
+            type: object
+    courses.created:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/CourseObject"
+    courses.deleted:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/CourseObject"
+    districts.updated:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/DistrictObject"
+          previous_attributes:
+            type: object
+    districts.created:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/DistrictObject"
+    districts.deleted:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/DistrictObject"
+    resources.updated:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/ResourceObject"
+          previous_attributes:
+            type: object
+    resources.created:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/ResourceObject"
+    resources.deleted:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/ResourceObject"
+    schools.updated:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/SchoolObject"
+          previous_attributes:
+            type: object
+    schools.created:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/SchoolObject"
+    schools.deleted:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/SchoolObject"
+    sections.updated:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/SectionObject"
+          previous_attributes:
+            type: object
+    sections.created:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/SectionObject"
+    sections.deleted:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/SectionObject"
+    terms.updated:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/TermObject"
+          previous_attributes:
+            type: object
+    terms.created:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/TermObject"
+    terms.deleted:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/TermObject"
+    users.updated:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/UserObject"
+          previous_attributes:
+            type: object
+    users.created:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/UserObject"
+    users.deleted:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: object
+        properties:
+          data:
+            $ref: "#/components/schemas/UserObject"
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BadRequest"
+    InternalError:
+      description: Internal Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/InternalError"
+    NotFound:
+      description: Entity Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NotFound"
+    Unauthorized:
+      description: Not authorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Unauthorized"
+  securitySchemes:
+    bearerAuth:
+      type: apiKey
+      description: |
+        Access token for the Clever Data API, sent in the Authorization header.
+        Pass the value as `Bearer <token>`.
+      name: Authorization
+      in: header
+x-samples-languages:
+- curl
+- node
+- ruby
+- python
+- php
+- java
+- go
+x-original-swagger-version: "2.0"

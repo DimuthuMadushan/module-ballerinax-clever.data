@@ -2,13 +2,16 @@
 
 The `ballerinax/clever.data` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
-2. 
+| Example | Description |
+|---------|-------------|
+| [School roster overview](./school_roster_overview/school_roster_overview.md) | List the districts, the schools in them and the sections taught at each school. |
+| [Assignment grading workflow](./assignment_grading_workflow/assignment_grading_workflow.md) | Create an assignment in a section, update it and review or grade the student submissions. |
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+1. A Clever access token for the Clever Data API. Each example reads it from the `token` configurable in its `Config.toml`.
+
+2. Ballerina Swan Lake 2201.12.0 or later.
 
 ## Running an example
 
