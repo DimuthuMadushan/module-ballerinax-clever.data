@@ -26,11 +26,32 @@ final string schoolId = isLiveServer ? os:getEnv("CLEVER_SCHOOL_ID") : "5fc2d5ab
 final string sectionId = isLiveServer ? os:getEnv("CLEVER_SECTION_ID") : "5fc2d5ab2d9f3c0001a1b2e1";
 final string userId = isLiveServer ? os:getEnv("CLEVER_USER_ID") : "5fc2d5ab2d9f3c0001a1b311";
 final string entityId = "5fc2d5ab2d9f3c0001a1b2c3";
+final string courseId = isLiveServer ? os:getEnv("CLEVER_COURSE_ID") : entityId;
+final string districtId = isLiveServer ? os:getEnv("CLEVER_DISTRICT_ID") : entityId;
+final string termId = isLiveServer ? os:getEnv("CLEVER_TERM_ID") : entityId;
+final string eventId = isLiveServer ? os:getEnv("CLEVER_EVENT_ID") : entityId;
+
+// ID of the assignment created by testCreateAssignmentForSection, reused by the dependent tests.
+isolated string createdAssignmentId = entityId;
 
 final Client cleverClient = check new ({
     auth: {token},
     httpVersion: http:HTTP_1_1
 }, serviceUrl);
+
+isolated function getCreatedAssignmentId() returns string {
+    lock {
+        return createdAssignmentId;
+    }
+}
+
+@test:AfterSuite
+isolated function deleteCreatedAssignment() returns error? {
+    string assignmentId = getCreatedAssignmentId();
+    if assignmentId != entityId {
+        check cleverClient->deleteAssignmentForSection(sectionId, assignmentId);
+    }
+}
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetCourses() returns error? {
@@ -40,7 +61,7 @@ isolated function testGetCourses() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetCourse() returns error? {
-    CourseResponse response = check cleverClient->getCourse(entityId);
+    CourseResponse response = check cleverClient->getCourse(courseId);
     test:assertTrue(response?.data !is ());
 }
 
@@ -52,7 +73,7 @@ isolated function testGetDistricts() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetDistrict() returns error? {
-    DistrictResponse response = check cleverClient->getDistrict(entityId);
+    DistrictResponse response = check cleverClient->getDistrict(districtId);
     test:assertTrue(response?.data !is ());
 }
 
@@ -100,7 +121,7 @@ isolated function testGetTerms() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetTerm() returns error? {
-    TermResponse response = check cleverClient->getTerm(entityId);
+    TermResponse response = check cleverClient->getTerm(termId);
     test:assertTrue(response?.data !is ());
 }
 
@@ -130,7 +151,7 @@ isolated function testGetEvents() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetEvent() returns error? {
-    EventResponse response = check cleverClient->getEvent(entityId);
+    EventResponse response = check cleverClient->getEvent(eventId);
     test:assertTrue(response?.data !is ());
 }
 
@@ -147,18 +168,24 @@ isolated function testCreateAssignmentForSection() returns error? {
         description: "Complete exercises 1 to 20",
         pointsPossible: 20.0
     });
-    test:assertTrue(response?.data !is ());
+    string? assignmentId = response?.data?.id;
+    test:assertTrue(assignmentId is string);
+    if assignmentId is string {
+        lock {
+            createdAssignmentId = assignmentId;
+        }
+    }
 }
 
-@test:Config {groups: ["live_tests", "mock_tests"]}
+@test:Config {groups: ["live_tests", "mock_tests"], dependsOn: [testCreateAssignmentForSection]}
 isolated function testGetAssignmentForSection() returns error? {
-    AssignmentResponse response = check cleverClient->getAssignmentForSection(sectionId, entityId);
+    AssignmentResponse response = check cleverClient->getAssignmentForSection(sectionId, getCreatedAssignmentId());
     test:assertTrue(response?.data !is ());
 }
 
-@test:Config {groups: ["live_tests", "mock_tests"]}
+@test:Config {groups: ["live_tests", "mock_tests"], dependsOn: [testCreateAssignmentForSection]}
 isolated function testUpdateAssignmentForSection() returns error? {
-    AssignmentResponse response = check cleverClient->updateAssignmentForSection(sectionId, entityId, {
+    AssignmentResponse response = check cleverClient->updateAssignmentForSection(sectionId, getCreatedAssignmentId(), {
         title: "Chapter 3 Homework (revised)"
     });
     test:assertTrue(response?.data !is ());
@@ -172,21 +199,21 @@ isolated function testDeleteAssignmentForSection() returns error? {
     test:assertTrue(response is ());
 }
 
-@test:Config {groups: ["live_tests", "mock_tests"]}
+@test:Config {groups: ["live_tests", "mock_tests"], dependsOn: [testCreateAssignmentForSection]}
 isolated function testGetSubmissionsForAssignment() returns error? {
-    SubmissionsResponse response = check cleverClient->getSubmissionsForAssignment(sectionId, entityId);
+    SubmissionsResponse response = check cleverClient->getSubmissionsForAssignment(sectionId, getCreatedAssignmentId());
     test:assertTrue(response?.data is Submission[]);
 }
 
-@test:Config {groups: ["live_tests", "mock_tests"]}
+@test:Config {groups: ["live_tests", "mock_tests"], dependsOn: [testCreateAssignmentForSection]}
 isolated function testGetSubmissionForAssignment() returns error? {
-    SubmissionResponse response = check cleverClient->getSubmissionForAssignment(sectionId, entityId, userId);
+    SubmissionResponse response = check cleverClient->getSubmissionForAssignment(sectionId, getCreatedAssignmentId(), userId);
     test:assertTrue(response?.data !is ());
 }
 
-@test:Config {groups: ["live_tests", "mock_tests"]}
+@test:Config {groups: ["live_tests", "mock_tests"], dependsOn: [testCreateAssignmentForSection]}
 isolated function testUpdateSubmissionForAssignment() returns error? {
-    SubmissionResponse response = check cleverClient->updateSubmissionForAssignment(sectionId, entityId, userId, {
+    SubmissionResponse response = check cleverClient->updateSubmissionForAssignment(sectionId, getCreatedAssignmentId(), userId, {
         grade: "18",
         gradeComment: "Well done"
     });

@@ -29,8 +29,8 @@ public function main() returns error? {
                 continue;
             }
             schoolCount += 1;
-            data:SectionsResponse sections = check clever->getSectionsForSchool(schoolId);
-            io:println(schoolEntry.data?.name, ": ", (sections.data ?: []).length(), " section(s)");
+            int sectionCount = check countSections(clever, schoolId);
+            io:println(schoolEntry.data?.name, ": ", sectionCount, " section(s)");
             lastSchoolId = schoolId;
         }
         if page.length() < pageSize {
@@ -38,4 +38,27 @@ public function main() returns error? {
         }
     }
     io:println("Schools processed: ", schoolCount);
+}
+
+// Counts the sections of a school across every page of the paginated sections list.
+function countSections(data:Client clever, string schoolId) returns int|error {
+    string? lastSectionId = ();
+    int total = 0;
+    while true {
+        data:GetSectionsForSchoolQueries sectionQuery = {'limit: pageSize};
+        if lastSectionId is string {
+            sectionQuery.startingAfter = lastSectionId;
+        }
+        data:SectionsResponse sections = check clever->getSectionsForSchool(schoolId, queries = sectionQuery);
+        data:SectionResponse[] page = sections.data ?: [];
+        total += page.length();
+        if page.length() < pageSize {
+            return total;
+        }
+        string? id = page[page.length() - 1].data?.id;
+        if id is () {
+            return total;
+        }
+        lastSectionId = id;
+    }
 }

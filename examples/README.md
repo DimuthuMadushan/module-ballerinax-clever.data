@@ -9,7 +9,7 @@ The `ballerinax/clever.data` connector provides practical examples illustrating 
 
 ## Prerequisites
 
-1. A Clever access token for the Clever Data API. Each example reads it from the `token` configurable in its `Config.toml`.
+1. A Clever district bearer token for the Clever Data API (user tokens cannot use `limit` and the paginated roster endpoints). Each example reads it from the `token` configurable in its `Config.toml`.
 
 2. Ballerina Swan Lake 2201.12.0 or later.
 

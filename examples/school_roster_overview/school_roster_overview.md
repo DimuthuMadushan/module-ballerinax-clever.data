@@ -5,7 +5,7 @@ This example lists the districts visible to your access token, pages through eve
 ## Prerequisites
 
 - Ballerina Swan Lake 2201.12.0 or later
-- A Clever access token for the Clever Data API
+- A Clever district bearer token for the Clever Data API (user tokens cannot use `limit` and the paginated roster endpoints)
 - Create a `Config.toml` in this directory:
   ```toml
   token = "<access-token>"

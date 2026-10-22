@@ -68,5 +68,5 @@ bal run
 
 The `Clever Data` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-clever.data/tree/main/examples/), covering the following use cases:
 
-1. [School roster overview](../examples/school_roster_overview/school_roster_overview.md) - List the districts, the schools in them and the sections taught at each school.
-2. [Assignment grading workflow](../examples/assignment_grading_workflow/assignment_grading_workflow.md) - Create an assignment in a section, update it and review or grade the student submissions.
+1. [School roster overview](https://github.com/ballerina-platform/module-ballerinax-clever.data/tree/main/examples/school_roster_overview) - List the districts, the schools in them and the sections taught at each school.
+2. [Assignment grading workflow](https://github.com/ballerina-platform/module-ballerinax-clever.data/tree/main/examples/assignment_grading_workflow) - Create an assignment in a section, update it and review or grade the student submissions.

@@ -5,7 +5,7 @@ This example creates an assignment in a section, updates it, and then reviews ev
 ## Prerequisites
 
 - Ballerina Swan Lake 2201.12.0 or later
-- A Clever access token with permission to manage assignments
+- A Clever district bearer token with permission to manage assignments
 - Create a `Config.toml` in this directory:
   ```toml
   token = "<access-token>"
@@ -13,7 +13,8 @@ This example creates an assignment in a section, updates it, and then reviews ev
   assignmentTitle = "<assignment-title>"
   dueDate = "<due-date-time>"
   applyGrades = false
-  gradeToApply = "A"
+  gradePoints = 100.0
+  termId = "<term-id>"  # required when the section is in Schoology; omit otherwise
   ```
 
 ## Run the example

@@ -8,7 +8,8 @@ configurable string sectionId = ?;
 configurable string assignmentTitle = ?;
 configurable string dueDate = ?;
 configurable boolean applyGrades = false;
-configurable string gradeToApply = "A";
+configurable string termId = "";
+configurable float gradePoints = 100.0;
 
 public function main() returns error? {
     data:Client clever = check new ({auth: {token}});
@@ -17,7 +18,9 @@ public function main() returns error? {
         title: assignmentTitle,
         description: "Created from the Clever Data connector example",
         dueDate,
-        pointsPossible: 100.0
+        pointsPossible: 100.0,
+        submissionTypes: ["link", "file"],
+        termId: termId == "" ? () : termId
     });
     string? assignmentId = created.data?.id;
     if assignmentId is () {
@@ -45,8 +48,8 @@ public function main() returns error? {
             string? userId = submission.userId;
             if applyGrades && userId is string {
                 data:SubmissionResponse graded = check clever->updateSubmissionForAssignment(
-                        sectionId, assignmentId, userId, {grade: gradeToApply});
-                io:println("Graded ", userId, ": ", graded.data?.grade);
+                        sectionId, assignmentId, userId, {gradePoints});
+                io:println("Graded ", userId, ": ", graded.data?.gradePoints);
             }
         }
         cursor = nextCursor(submissions.links ?: []);
